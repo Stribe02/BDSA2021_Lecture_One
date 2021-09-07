@@ -11,9 +11,18 @@ namespace Assignment00
             _leapYear = false;
         }
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("result: ");
+            var program = new Program();
+            Console.WriteLine("Type in a year:");
+            int year = Convert.ToInt32(Console.ReadLine());
+            program.IsLeapYear(year);
+            if(program._leapYear == true)
+            {
+                Console.WriteLine("yay");
+            } else {
+                Console.WriteLine("nay");
+            }
         }
 
         public bool IsLeapYear(int year)
