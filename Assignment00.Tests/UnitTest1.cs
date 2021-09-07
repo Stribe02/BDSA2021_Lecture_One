@@ -83,7 +83,7 @@ namespace Assignment00.Tests
             //Arrange
             var writer = new StringWriter();
             Console.SetOut(writer);
-            var reader = new StringReader("1444");
+            var reader = new StringReader("1600"); // fixed due to new expection handling
             Console.SetIn(reader);
 
             //Act
@@ -110,6 +110,40 @@ namespace Assignment00.Tests
             //Assert
             Assert.Equal($"Type in a year:{Environment.NewLine}nay",output);
 
+        }
+
+        [Fact]
+        public void Writing_letters_Expection()
+        {
+            //Arange 
+            var writer = new StringWriter();
+            Console.SetOut(writer);
+            var reader = new StringReader("Test");
+            Console.SetIn(reader);
+            var exception = new FormatException("please type in an integer and not letters or decimals");
+
+            //Act
+            Program.Main(new string[0]);
+            var output = writer.GetStringBuilder().ToString().Trim();
+
+            //Assert
+            Assert.Equal($"Type in a year:{Environment.NewLine}please type in an integer and not letters or decimals",output);
+        }
+
+        [Fact]
+        public void Typing_Year_Earlier_Than_1582()
+        {
+            //Arrange
+            var writer = new StringWriter();
+            Console.SetOut(writer);
+            var reader = new StringReader("Test");
+            Console.SetIn(reader);
+            var errortext = "The year is earlier than 1582! Please type in a year later than 1582";
+            var exception = new ArgumentException(errortext);
+
+            Program.Main(new string[0]);
+            var output = writer.GetStringBuilder().ToString().Trim();
+            Assert.Equal(errortext, errortext);
         }
 }
 }
